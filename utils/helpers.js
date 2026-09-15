@@ -32,5 +32,4 @@ function validarIncidencia(body) {
 
   return { valido: true, mensaje: "" };
 }
-
 module.exports = { PRIORIDADES_VALIDAS, esStringValido, validarIncidencia, capitalizar };

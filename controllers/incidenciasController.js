@@ -24,7 +24,7 @@ function crearIncidencia(req, res) {
   incidencias.push(nuevaIncidencia);
   siguienteId++;
 
-  return res.status(201).json({ mensaje: "Incidencia registrada correctamente" });
+  return res.status(201).json({ mensaje: "Incidencia registrada correctamente." });
 }
 
 module.exports = { incidencias, crearIncidencia };
