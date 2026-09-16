@@ -27,4 +27,11 @@ function crearIncidencia(req, res) {
   return res.status(201).json({ mensaje: "Incidencia registrada correctamente." });
 }
 
-module.exports = { incidencias, crearIncidencia };
+function listarIncidencias(req, res)
+{
+  return res.status(200).json(incidencias);
+}
+
+
+
+module.exports = { incidencias, crearIncidencia, listarIncidencias };
