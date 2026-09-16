@@ -1,8 +1,9 @@
 const express = require("express");
 const router = express.Router();
 
-const { crearIncidencia } = require("../controllers/incidenciasController");
+const { crearIncidencia, listarIncidencias } = require("../controllers/incidenciasController");
 
 router.post("/", crearIncidencia);
+router.get("/", listarIncidencias);
 
 module.exports = router;
