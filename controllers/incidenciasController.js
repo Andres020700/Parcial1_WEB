@@ -34,4 +34,4 @@ function listarIncidencias(req, res)
 
 
 
-module.exports = { incidencias, crearIncidencia };
+module.exports = { incidencias, crearIncidencia, listarIncidencias };
