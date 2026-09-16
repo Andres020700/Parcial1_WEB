@@ -44,10 +44,23 @@ function buscarIncidenciaPorId(req, res) {
   return res.status(200).json(incidencia);
 }
 
+function obtenerEstadisticas(req, res) {
+  const estadisticas = {
+    totalIncidencias: incidencias.length,
+    pendientes: incidencias.filter((incidencia) => incidencia.estado === "Pendiente").length,
+    enProceso: incidencias.filter((incidencia) => incidencia.estado === "En Proceso").length,
+    resueltas: incidencias.filter((incidencia) => incidencia.estado === "Resuelta").length,
+    canceladas: incidencias.filter((incidencia) => incidencia.estado === "Cancelada").length,
+  };
 
-module.exports = { 
+  return res.status(200).json(estadisticas);
+}
+
+
+module.exports = {
   incidencias,
-  crearIncidencia, 
+  crearIncidencia,
   listarIncidencias,
-  buscarIncidenciaPorId
+  buscarIncidenciaPorId,
+  obtenerEstadisticas,
 };
