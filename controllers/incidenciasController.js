@@ -32,6 +32,22 @@ function listarIncidencias(req, res)
   return res.status(200).json(incidencias);
 }
 
+function buscarIncidenciaPorId(req, res) {
+  const {id} = req.params;
+
+  const incidencia = incidencias.find((incidencia) => incidencia.id === parseInt(id));
+
+  if (!incidencia) {
+    return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+  }
+
+  return res.status(200).json(incidencia);
+}
 
 
-module.exports = { incidencias, crearIncidencia, listarIncidencias };
+module.exports = { 
+  incidencias,
+  crearIncidencia, 
+  listarIncidencias,
+  buscarIncidenciaPorId
+};
