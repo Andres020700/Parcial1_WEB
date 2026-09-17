@@ -1,3 +1,4 @@
+// Valores permitidos para la prioridad y el estado.
 const PRIORIDADES_VALIDAS = ["Alta", "Media", "Baja"];
 const ESTADOS = {
   PENDIENTE: "Pendiente",
@@ -7,11 +8,13 @@ const ESTADOS = {
 };
 
 function esStringValido(valor) {
+  // Solo acepta textos que no estén vacíos.
   if (typeof valor !== "string") return false;
   return valor.trim().length > 0;
 }
 
 function capitalizar(texto) {
+  // Deja cada palabra con la primera letra en mayúscula.
   return texto
     .trim()
     .toLowerCase()
@@ -24,6 +27,7 @@ function capitalizar(texto) {
 function validarIncidencia(body) {
   const { empleado, area, descripcion, prioridad } = body;
 
+  // Revisa los campos obligatorios uno por uno.
   if (!esStringValido(empleado)) {
     return { valido: false, mensaje: "El campo 'empleado' es obligatorio y no puede estar vacio." };
   } else if (!esStringValido(area)) {
@@ -40,6 +44,7 @@ function validarIncidencia(body) {
 }
 
 function normalizarEstado(estado) {
+  // Evita procesar valores que no sean texto.
   if (typeof estado !== "string") {
     return null;
   }
@@ -49,6 +54,7 @@ function normalizarEstado(estado) {
     .toLowerCase()
     .replace(/\s+/g, "");
 
+  // Devuelve el estado con el formato usado por la aplicación.
   switch (estadoNormalizado) {
     case "pendiente":
       return ESTADOS.PENDIENTE;
@@ -66,4 +72,6 @@ function normalizarEstado(estado) {
       return null;
   }
 }
+
+// Exporta las funciones que usan los controladores.
 module.exports = { PRIORIDADES_VALIDAS, esStringValido, validarIncidencia, capitalizar, normalizarEstado };

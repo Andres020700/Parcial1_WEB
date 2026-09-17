@@ -1,11 +1,13 @@
 const { validarIncidencia, capitalizar, normalizarEstado } = require("../utils/helpers");
 
+// Guarda las incidencias mientras el servidor está encendido.
 const incidencias = [];
 let siguienteId = 1;
 
 function crearIncidencia(req, res) {
   const { empleado, area, descripcion, prioridad } = req.body;
 
+  // Revisa que los datos recibidos sean correctos.
   const resultado = validarIncidencia(req.body);
 
   if (!resultado.valido) {
@@ -21,6 +23,7 @@ function crearIncidencia(req, res) {
     estado: "Pendiente",
   };
 
+  // Guarda la incidencia y prepara el siguiente id.
   incidencias.push(nuevaIncidencia);
   siguienteId++;
 
@@ -28,12 +31,14 @@ function crearIncidencia(req, res) {
 }
 
 function listarIncidencias(_req, res) {
+  // Devuelve todas las incidencias guardadas.
   return res.status(200).json(incidencias);
 }
 
 function buscarIncidenciaPorId(req, res) {
   const { id } = req.params;
 
+  // Busca una incidencia usando el id recibido en la URL.
   const incidencia = incidencias.find((incidencia) => incidencia.id === parseInt(id));
 
   if (!incidencia) {
@@ -46,6 +51,7 @@ function buscarIncidenciaPorId(req, res) {
 function clasificarIncidencia(req, res) {
   const { id } = req.params;
 
+  // Primero busca la incidencia que se quiere clasificar.
   const incidencia = incidencias.find((incidencia) => incidencia.id === parseInt(id));
 
   if (!incidencia) {
@@ -54,6 +60,7 @@ function clasificarIncidencia(req, res) {
 
   let clasificacion;
 
+  // Convierte la prioridad en una clasificación más descriptiva.
   switch (incidencia.prioridad) {
     case "Alta":
       clasificacion = "Critica";
@@ -75,7 +82,7 @@ function cambiarEstado(req, res) {
   const { id } = req.params;
   const { estado } = req.body;
 
-
+  // Busca la incidencia que se va a actualizar.
   const incidencia = incidencias.find(
     (incidencia) => incidencia.id === parseInt(id)
   );
@@ -86,6 +93,7 @@ function cambiarEstado(req, res) {
     });
   }
 
+  // Comprueba que el nuevo estado sea válido.
   const estadoValido = normalizarEstado(estado);
 
   if (!estadoValido) {
@@ -105,6 +113,7 @@ function cambiarEstado(req, res) {
 function eliminarIncidencia(req, res) {
   const { id } = req.params;
 
+  // Busca la posición de la incidencia dentro del arreglo.
   const indice = incidencias.findIndex(
     (incidencia) => incidencia.id === parseInt(id)
   );
@@ -115,6 +124,7 @@ function eliminarIncidencia(req, res) {
     });
   }
 
+  // Elimina la incidencia encontrada.
   incidencias.splice(indice, 1);
 
   return res.status(200).json({
@@ -124,9 +134,11 @@ function eliminarIncidencia(req, res) {
 }
 
 function obtenerEstadisticas(req, res) {
+  // Cuenta cuántas incidencias hay en cada estado.
   const contarPorEstado = (estado) =>
     incidencias.filter((inc) => inc.estado === estado).length;
 
+  // Prepara el resumen que se enviará al cliente.
   const respuesta = {
     totalIncidencias: incidencias.length,
     pendientes: contarPorEstado("Pendiente"),
@@ -138,7 +150,7 @@ function obtenerEstadisticas(req, res) {
   return res.status(200).json(respuesta);
 }
 
-
+// Exporta las funciones para usarlas en las rutas.
 module.exports = {
   incidencias,
   crearIncidencia,
