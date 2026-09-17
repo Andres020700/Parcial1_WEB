@@ -90,7 +90,7 @@ function cambiarEstado(req, res) {
 
   if (!estadoValido) {
     return res.status(400).json({
-      mensaje: "El estado debe ser Pendiente, En progreso, Resuelta o Cancelada"
+      mensaje: "El estado debe ser Pendiente, En Proceso, Resuelta o Cancelada"
     });
   }
 

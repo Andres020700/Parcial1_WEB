@@ -1,4 +1,10 @@
 const PRIORIDADES_VALIDAS = ["Alta", "Media", "Baja"];
+const ESTADOS = {
+  PENDIENTE: "Pendiente",
+  EN_PROCESO: "En Proceso",
+  RESUELTA: "Resuelta",
+  CANCELADA: "Cancelada",
+};
 
 function esStringValido(valor) {
   if (typeof valor !== "string") return false;
@@ -45,16 +51,16 @@ function normalizarEstado(estado) {
 
   switch (estadoNormalizado) {
     case "pendiente":
-      return "Pendiente";
+      return ESTADOS.PENDIENTE;
 
     case "enproceso":
-      return "En Proceso";
+      return ESTADOS.EN_PROCESO;
 
     case "resuelta":
-      return "Resuelta";
+      return ESTADOS.RESUELTA;
 
     case "cancelada":
-      return "Cancelada";
+      return ESTADOS.CANCELADA;
 
     default:
       return null;
