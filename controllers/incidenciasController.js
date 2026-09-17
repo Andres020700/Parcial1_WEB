@@ -44,7 +44,7 @@ function buscarIncidenciaPorId(req, res) {
 }
 
 function clasificarIncidencia(req, res) {
-  const {id} = req.params;
+  const { id } = req.params;
 
   const incidencia = incidencias.find((incidencia) => incidencia.id === parseInt(id));
 
@@ -90,7 +90,7 @@ function cambiarEstado(req, res) {
 
   if (!estadoValido) {
     return res.status(400).json({
-      mensaje:"El estado debe ser Pendiente, En progreso, Resuelta o Cancelada"
+      mensaje: "El estado debe ser Pendiente, En progreso, Resuelta o Cancelada"
     });
   }
 
@@ -102,6 +102,27 @@ function cambiarEstado(req, res) {
   });
 }
 
+function eliminarIncidencia(req, res) {
+  const { id } = req.params;
+
+  const indice = incidencias.findIndex(
+    (incidencia) => incidencia.id === parseInt(id)
+  );
+
+  if (indice === -1) {
+    return res.status(404).json({
+      mensaje: "Incidencia no encontrada"
+    });
+  }
+
+  incidencias.splice(indice, 1);
+
+  return res.status(200).json({
+    mensaje: "Incidencia eliminada correctamente",
+  });
+
+}
+
 
 module.exports = {
   incidencias,
@@ -109,5 +130,6 @@ module.exports = {
   listarIncidencias,
   buscarIncidenciaPorId,
   cambiarEstado,
-  clasificarIncidencia
+  clasificarIncidencia,
+  eliminarIncidencia
 };
