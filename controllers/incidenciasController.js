@@ -27,7 +27,7 @@ function crearIncidencia(req, res) {
   return res.status(201).json({ mensaje: "Incidencia registrada correctamente." });
 }
 
-function listarIncidencias(req, res) {
+function listarIncidencias(_req, res) {
   return res.status(200).json(incidencias);
 }
 
@@ -123,6 +123,21 @@ function eliminarIncidencia(req, res) {
 
 }
 
+function obtenerEstadisticas(req, res) {
+  const contarPorEstado = (estado) =>
+    incidencias.filter((inc) => inc.estado === estado).length;
+
+  const respuesta = {
+    totalIncidencias: incidencias.length,
+    pendientes: contarPorEstado("Pendiente"),
+    enProceso: contarPorEstado("En Proceso"),
+    resueltas: contarPorEstado("Resuelta"),
+    canceladas: contarPorEstado("Cancelada"),
+  };
+
+  return res.status(200).json(respuesta);
+}
+
 
 module.exports = {
   incidencias,
@@ -131,5 +146,6 @@ module.exports = {
   buscarIncidenciaPorId,
   cambiarEstado,
   clasificarIncidencia,
-  eliminarIncidencia
+  eliminarIncidencia,
+  obtenerEstadisticas
 };

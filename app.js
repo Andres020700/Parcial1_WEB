@@ -1,5 +1,6 @@
 const express = require("express");
 const incidenciasRouter = require("./routes/incidencias");
+const { obtenerEstadisticas } = require("./controllers/incidenciasController");
 
 const app = express();
 const PORT = 3000;
@@ -14,6 +15,8 @@ app.use("/incidencias", incidenciasRouter);
 app.get("/", (req, res) => {
   res.json({ mensaje: "API de Incidencias - TechSupport S.A." });
 });
+
+app.get("/estadisticas", obtenerEstadisticas);
 
 // 404: siempre al final
 app.use((req, res) => {
