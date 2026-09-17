@@ -1,4 +1,4 @@
-const { validarIncidencia, capitalizar } = require("../utils/helpers");
+const { validarIncidencia, capitalizar, normalizarEstado } = require("../utils/helpers");
 
 const incidencias = [];
 let siguienteId = 1;

@@ -60,4 +60,4 @@ function normalizarEstado(estado) {
       return null;
   }
 }
-module.exports = { PRIORIDADES_VALIDAS, esStringValido, validarIncidencia, capitalizar };
+module.exports = { PRIORIDADES_VALIDAS, esStringValido, validarIncidencia, capitalizar, normalizarEstado };
