@@ -12,6 +12,7 @@ npm start
 o en modo desarrollo (se reinicia solo al guardar cambios):
 
 ```bash
+npm install nodemon --save-dev
 npm run dev
 ```
 
@@ -46,3 +47,4 @@ Cada incidencia se guarda con esta forma:
 - `GET /incidencias/:id/clasificacion` - devuelve la clasificación según prioridad (Alta→Crítica, Media→Importante, Baja→Normal), usando switch.
 - `PUT /incidencias/:id/estado` - cambia el estado (Pendiente, En Proceso, Resuelta, Cancelada), usando switch.
 - `DELETE /incidencias/:id` - elimina una incidencia.
+- `GET /estadisticas` - devuelve el total de incidencias y cuántas hay por cada estado (pendientes, en proceso, resueltas, canceladas), calculado con `filter()`.
