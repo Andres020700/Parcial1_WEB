@@ -27,13 +27,12 @@ function crearIncidencia(req, res) {
   return res.status(201).json({ mensaje: "Incidencia registrada correctamente." });
 }
 
-function listarIncidencias(req, res)
-{
+function listarIncidencias(req, res) {
   return res.status(200).json(incidencias);
 }
 
 function buscarIncidenciaPorId(req, res) {
-  const {id} = req.params;
+  const { id } = req.params;
 
   const incidencia = incidencias.find((incidencia) => incidencia.id === parseInt(id));
 
@@ -44,10 +43,41 @@ function buscarIncidenciaPorId(req, res) {
   return res.status(200).json(incidencia);
 }
 
+function cambiarEstado(req, res) {
+  const { id } = req.params;
+  const { estado } = req.body;
 
-module.exports = { 
+  const incidencia = incidencias.find(
+    (incidencia) => incidencia.id === parseInt(id)
+  );
+
+  if (!incidencia) {
+    return res.status(404).json({
+      mensaje: "Incidencia no encontrada"
+    });
+  }
+
+  const estadoValido = normalizarEstado(estado);
+
+  if (!estadoValido) {
+    return res.status(400).json({
+      mensaje:"El estado debe ser Pendiente, En progreso, Resuelta o Cancelada"
+    });
+  }
+
+  incidencia.estado = estadoValido;
+
+  return res.status(200).json({
+    mensaje: "Estado actualizado correctamente",
+    incidencia
+  });
+}
+
+
+module.exports = {
   incidencias,
-  crearIncidencia, 
+  crearIncidencia,
   listarIncidencias,
-  buscarIncidenciaPorId
+  buscarIncidenciaPorId,
+  cambiarEstado
 };

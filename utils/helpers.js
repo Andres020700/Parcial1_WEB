@@ -32,4 +32,32 @@ function validarIncidencia(body) {
 
   return { valido: true, mensaje: "" };
 }
+
+function normalizarEstado(estado) {
+  if (typeof estado !== "string") {
+    return null;
+  }
+
+  const estadoNormalizado = estado
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "");
+
+  switch (estadoNormalizado) {
+    case "pendiente":
+      return "Pendiente";
+
+    case "enprogreso":
+      return "En progreso";
+
+    case "resuelta":
+      return "Resuelta";
+
+    case "cancelada":
+      return "Cancelada";
+
+    default:
+      return null;
+  }
+}
 module.exports = { PRIORIDADES_VALIDAS, esStringValido, validarIncidencia, capitalizar };
