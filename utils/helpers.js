@@ -47,8 +47,8 @@ function normalizarEstado(estado) {
     case "pendiente":
       return "Pendiente";
 
-    case "enprogreso":
-      return "En progreso";
+    case "enproceso":
+      return "En Proceso";
 
     case "resuelta":
       return "Resuelta";
