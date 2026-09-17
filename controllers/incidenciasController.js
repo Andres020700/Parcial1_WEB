@@ -43,9 +43,38 @@ function buscarIncidenciaPorId(req, res) {
   return res.status(200).json(incidencia);
 }
 
+function clasificarIncidencia(req, res) {
+  const {id} = req.params;
+
+  const incidencia = incidencias.find((incidencia) => incidencia.id === parseInt(id));
+
+  if (!incidencia) {
+    return res.status(404).json({ mensaje: "Incidencia no encontrada" });
+  }
+
+  let clasificacion;
+
+  switch (incidencia.prioridad) {
+    case "Alta":
+      clasificacion = "Critica";
+      break;
+    case "Media":
+      clasificacion = "Importante";
+      break;
+    case "Baja":
+      clasificacion = "Normal";
+      break;
+    default:
+      return res.status(400).json({ mensaje: "Prioridad invalida" });
+  }
+
+  return res.status(200).json({ id: incidencia.id, clasificacion });
+}
+
 function cambiarEstado(req, res) {
   const { id } = req.params;
   const { estado } = req.body;
+
 
   const incidencia = incidencias.find(
     (incidencia) => incidencia.id === parseInt(id)
@@ -79,5 +108,6 @@ module.exports = {
   crearIncidencia,
   listarIncidencias,
   buscarIncidenciaPorId,
-  cambiarEstado
+  cambiarEstado,
+  clasificarIncidencia
 };
